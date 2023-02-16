@@ -5,32 +5,29 @@ import java.util.*;
 public class DishOrderDeterminer {
     public List<Integer> determineDishOrder(int numberOfDishes, int everyDishNumberToEat) {
 
-    List<Integer> dishList = new LinkedList<>();
-    List<Integer> dishOrder = new ArrayList<>();
+        LinkedList<Integer> dishList = new LinkedList<>();
+        LinkedList<Integer> dishOrder = new LinkedList<>();
 
-    for (int i = 1; i <= numberOfDishes; i++) {
+        for (int i = 1; i <= numberOfDishes; i++) {
 
-        dishList.add(numberOfDishes, i);
-    }
-
-    while (dishList.size() > 0) {
-
-        for (int element : dishList) {
-
-            if (dishList.size() < everyDishNumberToEat) {
-
-                if (dishList.indexOf(element) % everyDishNumberToEat == 0) {
-
-                    dishOrder.add(numberOfDishes, element);
-                    dishList.remove(element);
-                }
-            } else {
-
-                dishOrder.add(numberOfDishes, element);
-                dishList.remove(element);
-            }
+            dishList.addLast(i);
         }
-    }
+
+        int i = 1;
+        while (!dishList.isEmpty()) {
+
+            int dish = dishList.poll();
+
+            if (i % everyDishNumberToEat == 0) {
+
+                dishOrder.add(dish);
+
+            } else {
+                dishList.offer(dish);
+            }
+
+            i++;
+        }
 
         return dishOrder;
     }
